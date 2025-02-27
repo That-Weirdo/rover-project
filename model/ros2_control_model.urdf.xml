@@ -1,0 +1,27 @@
+<ros2_control name="rover-drive" type="system">
+  <hardware name="encoders">
+    <param name="port"></param>
+  </hardware>
+  <joint name="leftWheelJoint" type="actuator">
+    <command_interface name="position">
+      <param name="min">-1</param>
+      <param name="max">1</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+  <joint name="rightWheelJoint" type="actuator">
+    <command_interface name="position">
+      <param name="min">-1</param>
+      <param name="max">1</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+  <gpio name="leftEnc">
+    <command_interface name="digital_output1"/>
+    <state_interface name="digital_output1"/>    <!-- Needed to know current state of the output -->
+    <command_interface name="digital_output2"/>
+    <state_interface name="digital_output2"/>
+    <state_interface name="digital_input1"/>
+    <state_interface name="digital_input2"/>
+  </gpio>
+</ros2_control>
