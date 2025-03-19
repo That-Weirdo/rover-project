@@ -1,4 +1,8 @@
 /build
 /install
 /log
-/src/ros2_control_demos
+/src/*
+!/src/rover
+__pycache__/
+# Append any new packages here
+

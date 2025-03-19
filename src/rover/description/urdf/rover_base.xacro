@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="tire_diam" value="0.259"/>
+	<xacro:property name="tire_dist" value="0.752"/>
+	<xacro:property name="tire_width" value="0.08"/>
+	<xacro:property name="axle_offset" value="0.055"/>
+	<xacro:property name="caster_offset" value="0.07"/>
+
+	<xacro:property name="base_width" value="0.615"/>
+	<xacro:property name="base_length" value="1.22"/>
+	<xacro:property name="base_thickness" value="0.02"/>
+	<xacro:property name="base_lift" value="0.305"/> <!--Distance between ground and center of base-->
+
+	<xacro:property name="PI" value="3.141592653"/>
+
+	<xacro:macro name="zero_origin">
+		<origin xyz='0 0 0' rpy='0 0 0'/>
+	</xacro:macro>
+
+
+
+	<material name="wood">
+		<color rgba="0.4 0.15 0.0 1" />
+	</material>
+
+	<material name="black">
+		<color rgba="0.1 0.1 0.1 1" />
+	</material>
+
+	<link name='world'/>
+
+	<joint name='world_to_chassis' type='fixed'>
+		<parent link = 'world'/>
+		<child link = 'chassis'/>
+		<origin xyz= '0 0 ${base_lift}' rpy='0 0 0'/>
+		
+	</joint>
+
+	<link name='chassis'>
+		<visual>
+			<xacro:zero_origin/>
+			<geometry>
+				<box size="${base_length} ${base_width} ${base_thickness}"/>
+			</geometry>
+			<material name="wood"/>
+		</visual>
+		<collision>
+			<xacro:zero_origin/>
+			<geometry>
+				<box size="${base_length} ${base_width} ${base_thickness}"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<xacro:zero_origin/>
+			<mass value="4.14395"/>
+			<inertia ixx='0.1' ixy='0' ixz='0' iyy='0.2' iyz='0' izz='0.2'/>
+		</inertial>
+	</link>
+
+
+	<!--TODO: NEEDS TO RUN ALONGSIDE JOINT_STATE_PUBLISHER-->
+
+	<!-- left wheel -->
+	<joint name='left_wheel_joint' type='continuous'>
+		<origin xyz='${base_length/2 - axle_offset} ${tire_dist/2} -${base_lift - tire_diam/2}' rpy='-${PI/2} 0 0'/>
+		<axis xyz='0 0 1'/>
+		<parent link='chassis'/>
+		<child link='left_wheel'/>
+	</joint>
+
+	<link name='left_wheel'>
+		<visual>
+			<xacro:zero_origin/>
+			<geometry>
+				<cylinder radius='${tire_diam / 2}' length='${tire_width}'/>
+			</geometry>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<xacro:zero_origin/>
+			<geometry>
+				<cylinder radius='${tire_diam / 2}' length='${tire_width}'/>
+			</geometry>
+		</collision>
+		<inertial>
+			<xacro:zero_origin/>
+			<mass value="0.5"/>
+			<inertia ixx='0.3' ixy='0' ixz='0' iyy='0.3' iyz='0' izz='0.5'/>
+		</inertial>
+	</link>
+
+	<joint name='right_wheel_joint' type='continuous'>
+		<origin xyz='${base_length/2 - axle_offset} -${tire_dist/2} -${base_lift - tire_diam/2}' rpy='-${PI/2} 0 0'/>
+		<axis xyz='0 0 1'/>
+		<parent link='chassis'/>
+		<child link='right_wheel'/>
+	</joint>
+
+	<link name='right_wheel'>
+		<visual>
+			<xacro:zero_origin/>
+			<geometry>
+				<cylinder radius='${tire_diam / 2}' length='${tire_width}'/>
+			</geometry>
+			<material name="black"/>
+		</visual>
+		<collision>
+			<xacro:zero_origin/>
+			<geometry>
+				<cylinder radius='${tire_diam / 2}' length='${tire_width}'/>
+			</geometry>
+		</collision>
+		<inertial>
+			<xacro:zero_origin/>
+			<mass value="0.5"/>
+			<inertia ixx='0.3' ixy='0' ixz='0' iyy='0.3' iyz='0' izz='0.5'/>
+		</inertial>
+	</link>
+
+	<!--caster wheel -->
+	<joint name='caster_wheel' type='fixed'>
+		<origin xyz='-${base_length/2 - caster_offset} 0 -${base_lift - tire_diam/2}' rpy='0 0 0'/>
+		<parent link='chassis'/>
+		<child link='caster'/>
+	</joint>
+
+	<link name='caster'>
+		<collision>
+			<origin xyz='0 0 0' rpy='0 0 0'/>
+			<geometry>
+				<sphere radius='${tire_diam / 2}'/>
+			</geometry>
+		</collision>
+		<inertial>
+			<mass value="0.5"/>
+			<inertia ixx='0.3' ixy='0' ixz='0' iyy='0.3' iyz='0' izz='0.3'/>
+		</inertial>
+		<visual name='visual'>
+			<origin xyz='0 0 0' rpy='0 0 0'/>
+			<geometry>
+				<sphere radius='${tire_diam / 2}'/>
+			</geometry>
+			<material name="black"/>
+		</visual>
+	</link>
+
+	<!-- LIDAR -->
+	<frame name="lidar_frame" attached_to='chassis'>
+		<pose>0.8 0 0.5 0 0 0</pose>
+	</frame>
+</robot>
