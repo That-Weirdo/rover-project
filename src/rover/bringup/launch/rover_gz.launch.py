@@ -35,10 +35,18 @@ def generate_launch_description():
             description="Start RViz2 automatically with this launch file.",
         )
     )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_sim_time",
+            default_value="true",
+            choices=['true', 'false']
+        )
+    )
 
     # Initialize Arguments
     use_mock_hardware = LaunchConfiguration("use_mock_hardware")
     gui = LaunchConfiguration("gui")
+    use_sim_time = LaunchConfiguration("use_sim_time")
 
 
     """ PACKAGE SHARES """
@@ -76,10 +84,18 @@ def generate_launch_description():
             "-topic",
             "/robot_description",
             "-name",
-            "rrbot_system_position", # Originally rrbot_system_position
+            "rover_diff_drive", # Originally rrbot_system_position
             "-allow_renaming",
             "true",
         ],
+    )
+
+    # Gazebo bridge
+    gazebo_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
+        output="screen",
     )
 
     robot_description_content = Command(
@@ -90,8 +106,8 @@ def generate_launch_description():
                     [rover_pkg, 'urdf', 'rover.xacro']
                 ),
                 " ",
-                "use_mock_hardware:=",
-                use_mock_hardware,
+                "use_gazebo:=",
+                "true",
             ]
         )     
 
@@ -104,7 +120,10 @@ def generate_launch_description():
             executable='robot_state_publisher',
             name='robot_state_publisher',
             output='both',
-            parameters=[robot_description]
+            parameters=[
+                robot_description,
+                {"use_sim_time": use_sim_time}
+            ]
     )
 
     # Setup intermediate controllers
@@ -122,12 +141,12 @@ def generate_launch_description():
     )
 
         
-    control_node = Node(
-        package="controller_manager",
-        executable="ros2_control_node",
-        parameters=[robot_controllers],
-        output="both",
-    )
+    #control_node = Node(
+    #    package="controller_manager",
+    #    executable="ros2_control_node",
+    #    parameters=[robot_controllers],
+    #    output="both",
+    #)
 
     # Allows publishing to Joint State Broadcaster for RVIZ
     joint_state_broadcaster_spawner = Node(
@@ -145,19 +164,18 @@ def generate_launch_description():
                 "--param-file", 
                 robot_controllers, 
                 "--controller-ros-args", 
-                "-r /diffbot_base_controller/cmd_bel:=/cmd_vel"
+                "-r /diffbot_base_controller/cmd_vel:=/cmd_vel"
             ],
     )
 
     nodes = [
         gazebo,
+        gazebo_bridge,
         gz_spawn_entity,
-        control_node,
         robot_state_pub_node,
         robot_controller_spawner,
         joint_state_broadcaster_spawner,
         rviz_node
-
     ]
 
     # Define all launch arguments and nodes to run
