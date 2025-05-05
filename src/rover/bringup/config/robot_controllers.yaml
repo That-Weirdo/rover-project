@@ -24,7 +24,7 @@ diffbot_base_controller:
 
     # Might need fine-tuning
     wheel_separation: 0.752
-    wheel_radius: 0.08
+    wheel_radius: 0.1295
 
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
