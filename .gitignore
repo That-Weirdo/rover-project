@@ -1,8 +1,7 @@
-/build
-/install
-/log
-/src/*
-!/src/rover
-__pycache__/
 # Append any new packages here
-
+__pycache__/
+rover_ws/build
+rover_ws/install
+rover_ws/log
+rover_ws/src/*
+!rover_ws/src/rover/*
