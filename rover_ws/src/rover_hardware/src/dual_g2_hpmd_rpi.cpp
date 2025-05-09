@@ -18,7 +18,7 @@ Motor::Motor(const int& pi, int pwm, int dir, int en, int flt): pi(pi), pwm_pin(
 	set_mode(pi, flt, PI_INPUT);
 
 	set_pull_up_down(pi, flt_pin, PI_PUD_UP); // make sure FLT is pulled up
-	gpio_write(pi, en_pin, PI_HIGH); // enable driver by default
+	gpio_write(pi, en_pin, PI_LOW); // disable driver by default
 }
 
 void Motor::setSpeed(int speed) {
@@ -57,7 +57,7 @@ Motors::Motors(int& pi):
 	motor1(pi, pin_M1PWM, pin_M1DIR, pin_M1EN, pin_M1FLT), 
 	motor2(pi, pin_M2PWM, pin_M2DIR, pin_M2EN, pin_M2FLT) {
 
-	if (pi != 0) { 
+	if (pi_connected) { 
 		throw std::runtime_error("Can't connect to pigpio");
 	}
 }
@@ -79,6 +79,9 @@ void Motors::disable() {
 bool Motors::getFaults() {
 	return motor1.getFault() || motor2.getFault();
 }
+
+bool Motors::pi_connected() {
+	return pi != 0;
 
 void Motors::forceStop() {
 	// reinitialize the pigpio interface in case we interrupted another command
