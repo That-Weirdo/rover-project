@@ -11,6 +11,14 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+add_library(
+  rover_hardware
+  SHARED
+  src/diffdrive_arduino.cpp
+  src/wheel.cpp
+  src/arduino_comms.cpp
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

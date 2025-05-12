@@ -3,4 +3,4 @@ __pycache__/
 rover_ws/build
 rover_ws/install
 rover_ws/log
-!rover_ws/src/rover*
+rover_ws/src/diffdrive_arduino

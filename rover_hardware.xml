@@ -1,0 +1,11 @@
+<!-- Ros2 uses this file to create plugin -->
+<library path="rover_hardware">
+    <class name="rover_hardware/DiffDriveArduino"
+           type="rover_hardware/DiffDriveArduino"
+           base_class_type="hardware_interface::SystemInterface">
+        <description>
+            Diff drive system plugin for Rover project.
+        </description>
+    </class>
+    <!-- Add additional classes here -->
+</library>
