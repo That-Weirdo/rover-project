@@ -7,6 +7,11 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(serial REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(controller_manager REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(pluginlib REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -17,6 +22,21 @@ add_library(
   src/diffdrive_arduino.cpp
   src/wheel.cpp
   src/arduino_comms.cpp
+)
+
+# locates
+target_include_directories(
+  rover_hardware
+  PRIVATE
+  include
+)
+
+ament_export_dependencies(
+  hardware_interface
+  controller_manager
+  serial
+  rclcpp
+  pluginlib
 )
 
 if(BUILD_TESTING)
