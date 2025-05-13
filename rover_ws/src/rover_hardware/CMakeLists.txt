@@ -24,19 +24,34 @@ add_library(
   src/arduino_comms.cpp
 )
 
-# locates
-target_include_directories(
-  rover_hardware
-  PRIVATE
-  include
-)
-
 ament_export_dependencies(
   hardware_interface
   controller_manager
   serial
   rclcpp
   pluginlib
+target_include_directories(
+	rover_hardware
+	PRIVATE
+	include
+)
+ament_target_dependencies(
+	rover_hardware
+	hardware_interface
+	controller_manager
+	serial
+	rclcpp
+	pluginlib
+)
+
+pluginlib_export_plugin_description_file(hardware_interface rover_hardware.xml)
+
+ament_export_dependencies(
+	hardware_interface
+	controller_manager
+	serial
+	rclcpp
+	pluginlib
 )
 
 if(BUILD_TESTING)
