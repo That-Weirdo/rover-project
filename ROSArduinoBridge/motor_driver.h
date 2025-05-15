@@ -11,14 +11,14 @@
   #define LEFT_MOTOR_ENABLE 13
 
 #elif defined POLOLU_DUAL_G2_RPI
-  #define RIGHT_MOTOR_DIR 5
-  #define LEFT_MOTOR_DIR 6
-  #define LEFT_MOTOR_ENABLE 12
-  #define RIGHT_MOTOR_ENABLE 13
-  #define LEFT_MOTOR_PWM 9
-  #define RIGHT_MOTOR_PWM 10
-  #define LEFT_MOTOR_FLT A1 
-  #define RIGHT_MOTOR_FLT A0
+  #define LEFT_MOTOR_DIR 5
+  #define RIGHT_MOTOR_DIR 6
+  #define LEFT_MOTOR_ENABLE 8
+  #define RIGHT_MOTOR_ENABLE 9
+  #define LEFT_MOTOR_PWM 2
+  #define RIGHT_MOTOR_PWM 3
+  #define LEFT_MOTOR_FLT 14 
+  #define RIGHT_MOTOR_FLT 15
 #endif
 
 void initMotorController();

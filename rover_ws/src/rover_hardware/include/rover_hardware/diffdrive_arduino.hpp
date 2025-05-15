@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "hardware_interface/system_interface.hpp"
-#include "hardware_interface/types/hardware_interface_return_values.hpp"
 
 #include "hardware_interface/handle.hpp"
 #include "hardware_interface/hardware_info.hpp"
@@ -14,11 +13,14 @@
 #include "rclcpp/duration.hpp"
 #include "rclcpp/macros.hpp"
 #include "rclcpp/time.hpp"
-#include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
+#include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
+#include "hardware_interface/types/hardware_interface_return_values.hpp"
 
-#include <pigpiod_if2.h>
-#include "rover_hardware/dual_g2_hpmd_rpi.h"
+
+#include "config.h"
+#include "wheel.h"
+#include "arduino_comms.h"
 
 // Sources:
 // 	Demo from https://github.com/masum919/ros2_control_custom_hardware_interface/blob/main/motor_controller/motor_controller/include/motor_controller/arduino_interface.hpp

@@ -74,12 +74,12 @@
       spd = 255;
     
     if (i == LEFT) { 
-      if      (reverse == 0) { analogWrite(LEFT_MOTOR_FORWARD, spd); analogWrite(LEFT_MOTOR_BACKWARD, 0); }
+      if      (reverse == 0) { analogWrite(LEFT_MOTOR_FORWARD, spd); analogWrite(LEFT_MOTOR_BACKWARD, 1); }
       else if (reverse == 1) { analogWrite(LEFT_MOTOR_BACKWARD, spd); analogWrite(LEFT_MOTOR_FORWARD, 0); }
     }
     else /*if (i == RIGHT) //no need for condition*/ {
       if      (reverse == 0) { analogWrite(RIGHT_MOTOR_FORWARD, spd); analogWrite(RIGHT_MOTOR_BACKWARD, 0); }
-      else if (reverse == 1) { analogWrite(RIGHT_MOTOR_BACKWARD, spd); analogWrite(RIGHT_MOTOR_FORWARD, 0); }
+      else if (reverse == 1) { analogWrite(RIGHT_MOTOR_BACKWARD, spd); analogWrite(RIGHT_MOTOR_FORWARD, 1); }
     }
   }
   
@@ -90,8 +90,19 @@
 
 #elif defined POLOLU_DUAL_G2_RPI
 void initMotorController() {
+    pinMode(RIGHT_MOTOR_ENABLE, OUTPUT);
+    pinMode(LEFT_MOTOR_ENABLE, OUTPUT);
+    pinMode(LEFT_MOTOR_PWM, OUTPUT);
+    pinMode(RIGHT_MOTOR_PWM, OUTPUT);
+    pinMode(LEFT_MOTOR_FLT, INPUT);
+    pinMode(RIGHT_MOTOR_FLT, INPUT);
+        pinMode(LEFT_MOTOR_DIR, OUTPUT);
+    pinMode(RIGHT_MOTOR_DIR, OUTPUT);
     digitalWrite(RIGHT_MOTOR_ENABLE, HIGH);
     digitalWrite(LEFT_MOTOR_ENABLE, HIGH);
+
+
+
   }
   
   void setMotorSpeed(int i, int spd) {
@@ -106,7 +117,7 @@ void initMotorController() {
     if (spd > 255) spd = 255;
     
     if (i == LEFT) { 
-      digitalWrite(LEFT_MOTOR_DIR, dir_val);
+      digitalWrite(LEFT_MOTOR_DIR, !dir_val);
       analogWrite(LEFT_MOTOR_PWM, spd);
     }
     else {
