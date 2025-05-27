@@ -7,7 +7,7 @@ The bot will search for objects around itself in an area it is designated into, 
 ## Software Details
 Redesign uses ROS2 Jazzy as a development base to allow for easier concurrent processing. Currently running with Docker on a PI 3B+. This computer runs the main code loop inside of a ros2 node.
 
-Diffdrive base uses `ros2 control` to send and receive serial to the Mega. Encoder position is used by the arduino as feedback to  
+Diffdrive base uses `ros2 control` to send and receive serial to the Mega. Encoder position is used by the arduino for motor closed feedback control.
 
 Camera vision is parsed on a separate Pi 5 using OpenCV, and telemetry of coordinates is sent to the Pi 3 upon request (See Next Goals).
 
@@ -43,7 +43,7 @@ Camera vision is parsed on a separate Pi 5 using OpenCV, and telemetry of coordi
   * To maintainers: **Warning**: Any motor tests have to be done outside, minimum of 10 to 20 feet from all obstacles. These motors are very torquey and fast. Development of shutdown code is vital. Look at `ros2_control` documentation for setting up `on_deactivate()` function, and how to call it.
 * Dead Reckoning needs tuning.
 * After robot is able to locate an object, create a pathing routine to locate objects, use dead reckoning returned from the diff_drive controller to establish a boundry zone for the robot's movement. If needed, use optical flow, 9dof sensor and/or GPS with sensor fusion techniques to get a cleaner dead reckoning result.
-* Design wiring harness for POE adapter and 
+* Design wiring harness for POE adapter and USB C PD adapter.
 
 ## Additional Hardware Needed
 * POE Adapter (24V DC step-up to 44V DC max 0.3A over POE) ([example](https://a.co/d/9A3WQek))
@@ -53,10 +53,10 @@ Camera vision is parsed on a separate Pi 5 using OpenCV, and telemetry of coordi
 ## Team Members
 * Ulises Ortega Morales ([Github](https://github.com/That-Weirdo))
   * Environment Sensing
-    * Researched interfacing with camera over RTSP and POE display
-    * Configured Interfacing (RTSP over Ethernet)
-    * Implemented Object Tracking and Identification with OpenCV2
-    * Researched and implemented Data Transmission over UART
+    * Researched interfacing with camera over RTSP and POE display.
+    * Configured Interfacing (RTSP over Ethernet).
+    * Implemented Object Tracking and Identification with OpenCV2.
+    * Researched and implemented Data Transmission over UART.
       
 * Joseph Salisbury ([Github](https://github.com/jpsalis))
   * Movement and Dead Reckoning
