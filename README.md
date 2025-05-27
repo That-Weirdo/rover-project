@@ -1,5 +1,4 @@
 # Senior Project: Autonomous Rover
-
 Work-in-progress team project. Rebuild and refactor of a former team's project.
 
 The bot will search for objects around itself in an area it is designated into, then collect and sort objects it finds by color, reporting back telemetry information about their positions to a computer. Once it finds all objects, it will return back to its starting position.
@@ -45,27 +44,29 @@ Camera vision is parsed on a separate Pi 5 using OpenCV, and telemetry of coordi
 * After robot is able to locate an object, create a pathing routine to locate objects, use dead reckoning returned from the diff_drive controller to establish a boundry zone for the robot's movement. If needed, use optical flow, 9dof sensor and/or GPS with sensor fusion techniques to get a cleaner dead reckoning result.
 * Design wiring harness for POE adapter and USB C PD adapter.
 
-## Additional Hardware Needed
+## Additional Hardware
 * POE Adapter (24V DC step-up to 44V DC max 0.3A over POE) ([example](https://a.co/d/9A3WQek))
 * USB C PD adapter(24V DC input, must support 5V 5A output safely) ([example](https://a.co/d/cJLEPb2))
   * POE class 1 wouldn't supply enough current to drive both the camera and Pi 5. POE+ would work, but the camera might not be compatible.
   
 ## Team Members
-* Ulises Ortega Morales ([Github](https://github.com/That-Weirdo))
+
+### Spring 2025
+* **Ulises Ortega-Morales** ([Github](https://github.com/That-Weirdo))
   * Environment Sensing
     * Researched interfacing with camera over RTSP and POE display.
     * Configured Interfacing (RTSP over Ethernet).
     * Implemented Object Tracking and Identification with OpenCV2.
     * Researched and implemented Data Transmission over UART.
-      
-* Joseph Salisbury ([Github](https://github.com/jpsalis))
+
+* **Joseph Salisbury** ([Github](https://github.com/jpsalis))
   * Movement and Dead Reckoning
     * Researched ROS2 and ROS2 Control.
     * Developed and simulated URDF model of robot with xacro macros.
     * Wired and mounted motors and encoders with custom parts.
-    * Developed a hardware driver for ROS2 control, porting an old library for Humble to Jazzy. 
- 
-* Brandon Orlando
+    * Developed a hardware driver for ROS2 control, porting an old library for Humble to Jazzy.
+
+* **Brandon Orlando**
   * Object Collection and Sorting System
     * Researched object sorting and collection systems.
     * Prototyped 3DOF manipulator with stepper motors.
